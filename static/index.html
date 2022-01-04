@@ -24,8 +24,6 @@
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
-        console.log("HI");
-
         fetch("/api/register", {
           method: "POST",
           headers: {
@@ -35,9 +33,7 @@
             username,
             password,
           }),
-        }).then((data) => console.log(data));
-
-        console.log("Hello");
+        });
       }
     </script>
   </body>
