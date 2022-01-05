@@ -7,24 +7,24 @@
     <title>JWT Login</title>
   </head>
   <body>
-    <h1>Registration Form</h1>
-    <form id="reg-form">
+    <h1>Login Form</h1>
+    <form id="login">
       <input type="text" id="username" />
       <input type="password" id="password" />
       <button id="btn">Submit</button>
     </form>
 
     <script>
-      const form = document.querySelector("#reg-form");
+      const form = document.querySelector("#login");
 
-      form.addEventListener("submit", registerUser);
+      form.addEventListener("submit", loginUser);
 
-      function registerUser(e) {
+      function loginUser(e) {
         e.preventDefault();
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
-        fetch("/api/register", {
+        fetch("/api/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

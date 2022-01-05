@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const User = require("./models/user");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+require("dotenv/config");
 
 const app = express();
 
@@ -53,6 +55,34 @@ app.post("/api/register", async (req, res) => {
     }
     res.json({ message: error });
   }
+});
+
+app.post("/api/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  const user = await User.findOne({ username }).lean();
+
+  if (!user) {
+    return res.json({
+      status: "Error",
+      description: "Invalid username/password",
+    });
+  }
+
+  if (await bcrypt.hash(password, user.password)) {
+    const token = jwt.sign(
+      {
+        // * This token is public
+        id: user._id,
+        username: user.username,
+      },
+      process.env.JWT_SECRET
+    );
+
+    return res.json({ status: "OK", data: token });
+  }
+
+  return res.json({ status: "Error" });
 });
 
 app.listen(9999);
