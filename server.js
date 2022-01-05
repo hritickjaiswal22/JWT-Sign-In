@@ -30,8 +30,6 @@ app.post("/api/register", async (req, res) => {
       password: encryptedPassword,
     });
 
-    console.log(result);
-
     res.json({ message: "Success" });
   } catch (error) {
     if (error.code === 11000) {
