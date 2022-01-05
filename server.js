@@ -85,4 +85,16 @@ app.post("/api/login", async (req, res) => {
   return res.json({ status: "Error" });
 });
 
+app.post("/api/changePassword", async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (error) {
+    return res.json({ status: "Error", error });
+  }
+
+  res.json({ status: "OK" });
+});
+
 app.listen(9999);
