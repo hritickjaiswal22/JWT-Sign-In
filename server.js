@@ -22,6 +22,20 @@ mongoose
 app.post("/api/register", async (req, res) => {
   const { username, password } = req.body;
 
+  if (password < 6) {
+    return res.json({
+      status: "Error",
+      description: "Password must greater than 6 characters",
+    });
+  }
+
+  if (username === "" || typeof username !== "string") {
+    return res.json({
+      status: "Error",
+      description: "Username must be a String",
+    });
+  }
+
   const encryptedPassword = await bcrypt.hash(password, 10);
 
   try {
